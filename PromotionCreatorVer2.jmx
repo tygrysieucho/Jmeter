@@ -106,7 +106,7 @@
         <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
         <hashTree>
           <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="Konfiguracja plików CSV" enabled="true">
-            <stringProp name="filename">userAndPassword.csv</stringProp>
+            <stringProp name="filename">C:/Users/rbucz/OneDrive/Pulpit/apache-jmeter-5.5/apache-jmeter-5.5/bin/userAndPassword.csv</stringProp>
             <stringProp name="fileEncoding">UTF-8</stringProp>
             <stringProp name="variableNames">username,password</stringProp>
             <boolProp name="ignoreFirstLine">true</boolProp>
@@ -180,8 +180,34 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Promotion " enabled="true"/>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Promotion settings" enabled="true"/>
         <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Loading promotion settings " enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol">htttps</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">uat-cms-api-gateway-opl.nd0.pl/ppm/api/settingsPanel</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Checking if budget is required" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">BudgetField</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.requireExternalBudgetId</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
           <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Loading Promotion Module" enabled="true"/>
           <hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="promotions" enabled="true">
@@ -202,7 +228,16 @@
               <stringProp name="HTTPSampler.connect_timeout"></stringProp>
               <stringProp name="HTTPSampler.response_timeout"></stringProp>
             </HTTPSamplerProxy>
-            <hashTree/>
+            <hashTree>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings"/>
+                <stringProp name="Assertion.custom_message"></stringProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">16</intProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="discountType" enabled="true">
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
                 <collectionProp name="Arguments.arguments"/>
@@ -1104,6 +1139,120 @@
               </HTTPSamplerProxy>
               <hashTree/>
             </hashTree>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Searching promotion" enabled="true"/>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Searching promotion by SKU" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;channels&quot;:null,&quot;clients&quot;:null,&quot;createdBy&quot;:null,&quot;description&quot;:null,&quot;finishDate&quot;:null,&quot;name&quot;:null,&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;products&quot;:{&quot;sku&quot;:[{&quot;sku&quot;:&quot;${SKU}&quot;,&quot;FullName&quot;:&quot;ZZ_ARIEL Proszek Kolor 1,5kg&quot;}]},&quot;id&quot;:null,&quot;promotionStatuses&quot;:null,&quot;promotionTypes&quot;:null,&quot;sortBy&quot;:&quot;creationDate&quot;,&quot;sortDirection&quot;:&quot;DESC&quot;,&quot;startDate&quot;:null,&quot;budgetName&quot;:null,&quot;workerStatuses&quot;:null,&quot;code&quot;:null,&quot;virtualProducts&quot;:null,&quot;allClients&quot;:null,&quot;discountTypesIds&quot;:null,&quot;customerGroups&quot;:null,&quot;activeFrom&quot;:null,&quot;activeTo&quot;:null}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">https://uat-cms-api-gateway-opl.nd0.pl/ppm/api/promotions/search</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Searching promotion by Id:${promoId}" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;channels&quot;:null,&quot;clients&quot;:null,&quot;createdBy&quot;:null,&quot;description&quot;:null,&quot;finishDate&quot;:null,&quot;name&quot;:null,&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;products&quot;:null,&quot;id&quot;:&quot;${promoId}&quot;,&quot;promotionStatuses&quot;:null,&quot;promotionTypes&quot;:null,&quot;sortBy&quot;:&quot;creationDate&quot;,&quot;sortDirection&quot;:&quot;DESC&quot;,&quot;startDate&quot;:null,&quot;budgetName&quot;:null,&quot;workerStatuses&quot;:null,&quot;code&quot;:null,&quot;virtualProducts&quot;:null,&quot;allClients&quot;:null,&quot;discountTypesIds&quot;:null,&quot;customerGroups&quot;:null,&quot;activeFrom&quot;:null,&quot;activeTo&quot;:null}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">https://uat-cms-api-gateway-opl.nd0.pl/ppm/api/promotions/search</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Searching promotion by date:${date}" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;channels&quot;:null,&quot;clients&quot;:null,&quot;createdBy&quot;:null,&quot;description&quot;:null,&quot;finishDate&quot;:null,&quot;name&quot;:null,&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;products&quot;:null,&quot;id&quot;:null,&quot;promotionStatuses&quot;:null,&quot;promotionTypes&quot;:null,&quot;sortBy&quot;:&quot;creationDate&quot;,&quot;sortDirection&quot;:&quot;DESC&quot;,&quot;startDate&quot;:null,&quot;budgetName&quot;:null,&quot;workerStatuses&quot;:null,&quot;code&quot;:null,&quot;allClients&quot;:null,&quot;discountTypesIds&quot;:null,&quot;customerGroups&quot;:null,&quot;activeFrom&quot;:&quot;${date}&quot;,&quot;activeTo&quot;:null}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">https://uat-cms-api-gateway-opl.nd0.pl/ppm/api/promotions/search</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Searching promotion by creator:${creator}" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;channels&quot;:null,&quot;clients&quot;:null,&quot;createdBy&quot;:&quot;${creator}&quot;,&quot;description&quot;:null,&quot;finishDate&quot;:null,&quot;name&quot;:null,&quot;page&quot;:1,&quot;pageSize&quot;:20,&quot;products&quot;:null,&quot;id&quot;:null,&quot;promotionStatuses&quot;:null,&quot;promotionTypes&quot;:null,&quot;sortBy&quot;:&quot;creationDate&quot;,&quot;sortDirection&quot;:&quot;DESC&quot;,&quot;startDate&quot;:null,&quot;budgetName&quot;:null,&quot;workerStatuses&quot;:null,&quot;code&quot;:null,&quot;allClients&quot;:null,&quot;discountTypesIds&quot;:null,&quot;customerGroups&quot;:null,&quot;activeFrom&quot;:null,&quot;activeTo&quot;:null}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">https://uat-cms-api-gateway-opl.nd0.pl/ppm/api/promotions/search</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Pobieranie promoId" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">promoId</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[0].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
           </hashTree>
         </hashTree>
       </hashTree>
